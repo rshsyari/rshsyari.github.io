@@ -18,38 +18,38 @@
     
 
     
-    <title>Bash</title>
+    <title>Bash script tips</title>
     <meta name="description" content="For some small tasks, sometimes Bash script (shell script in general) is better than a full-blown program using programming languages. Here are some personal …">
     <meta name="keywords" content='blog, gokarna, hugo'>
 
-    <meta property="og:url" content="http://localhost:1313/posts/bash/">
+    <meta property="og:url" content="https://rshsyari.github.io:1313/posts/bash/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Bash">
+    <meta property="og:title" content="Bash script tips">
     <meta property="og:description" content="For some small tasks, sometimes Bash script (shell script in general) is better than a full-blown program using programming languages. Here are some personal …">
-    <meta property="og:image" content="http://localhost:1313/">
-    <meta property="og:image:secure_url" content="http://localhost:1313/">
+    <meta property="og:image" content="https://rshsyari.github.io:1313/">
+    <meta property="og:image:secure_url" content="https://rshsyari.github.io:1313/">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Bash">
+    <meta name="twitter:title" content="Bash script tips">
     <meta name="twitter:description" content="For some small tasks, sometimes Bash script (shell script in general) is better than a full-blown program using programming languages. Here are some personal …">
-    <meta property="twitter:domain" content="http://localhost:1313/posts/bash/">
-    <meta property="twitter:url" content="http://localhost:1313/posts/bash/">
-    <meta name="twitter:image" content="http://localhost:1313/">
+    <meta property="twitter:domain" content="https://rshsyari.github.io:1313/posts/bash/">
+    <meta property="twitter:url" content="https://rshsyari.github.io:1313/posts/bash/">
+    <meta name="twitter:image" content="https://rshsyari.github.io:1313/">
 
     
-    <link rel="canonical" href="http://localhost:1313/posts/bash/">
+    <link rel="canonical" href="https://rshsyari.github.io:1313/posts/bash/">
 
     
-    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+    <link rel="stylesheet" type="text/css" href="../../css/normalize.min.css" media="print">
 
     
-    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.min.css">
 
     
-    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+    <link id="dark-theme" rel="stylesheet" href="../../css/dark.min.css">
 
     
-    <script src="/js/bundle.min.60fe9a4dcb5a42836ec53c446e239a9862be5c1f67da457c275b9bf9681d796b.js" integrity="sha256-YP6aTctaQoNuxTxEbiOamGK&#43;XB9n2kV8J1ub&#43;WgdeWs="></script>
+    <script src="../../js/bundle.min.60fe9a4dcb5a42836ec53c446e239a9862be5c1f67da457c275b9bf9681d796b.js" integrity="sha256-YP6aTctaQoNuxTxEbiOamGK&#43;XB9n2kV8J1ub&#43;WgdeWs="></script>
 
     
     
@@ -64,21 +64,21 @@
         
 
         <div class="nav-title">
-            <a class="nav-brand" href="http://localhost:1313/">rshsyari</a>
+            <a class="nav-brand" href="https://rshsyari.github.io:1313/">rshsyari</a>
         </div>
 
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="http://localhost:1313/" aria-label="" ><span data-feather='home'></span> Home </a>
+                <a href="https://rshsyari.github.io:1313/" aria-label="" ><span data-feather='home'></span> Home </a>
             </div>
             
             <div class="nav-link">
-                <a href="http://localhost:1313/posts/" aria-label="" ><span data-feather='book'></span> Posts </a>
+                <a href="https://rshsyari.github.io:1313/posts/" aria-label="" ><span data-feather='book'></span> Posts </a>
             </div>
             
             <div class="nav-link">
-                <a href="http://localhost:1313/projects/" aria-label="" ><span data-feather='code'></span> Projects </a>
+                <a href="https://rshsyari.github.io:1313/projects/" aria-label="" ><span data-feather='code'></span> Projects </a>
             </div>
             
 
@@ -101,15 +101,15 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="http://localhost:1313/" ><span data-feather='home'></span> Home </a>
+                    <a href="https://rshsyari.github.io:1313/" ><span data-feather='home'></span> Home </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="http://localhost:1313/posts/" ><span data-feather='book'></span> Posts </a>
+                    <a href="https://rshsyari.github.io:1313/posts/" ><span data-feather='book'></span> Posts </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="http://localhost:1313/projects/" ><span data-feather='code'></span> Projects </a>
+                    <a href="https://rshsyari.github.io:1313/projects/" ><span data-feather='code'></span> Projects </a>
                 </li>
                 
                 <li class="nav-item dark-theme-toggle">
@@ -126,7 +126,7 @@
 <main id="content">
     <div class="post container">
     <div class="post-header-section">
-        <h1>Bash</h1>
+        <h1>Bash script tips</h1>
 
         
 
@@ -194,7 +194,6 @@ If some variables are allowed to be undeclared, use <code>${variable_name:defaul
 </span></span></code></pre></div><p>Prefer this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>var1<span style="color:#e6db74">}</span><span style="color:#e6db74">_new.yaml&#34;</span>
 </span></span></code></pre></div><p>So it&rsquo;s clear that the variable name is <code>var1</code>, not <code>var1_new</code>.</p>
-
         
     </div>
 
@@ -231,6 +230,29 @@ If some variables are allowed to be undeclared, use <code>${variable_name:defaul
     
     
 </div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#exit-on-fail">Exit on fail</a></li>
+        <li><a href="#prevent-access-to-undeclared-variables">Prevent access to undeclared variables</a></li>
+        <li><a href="#idempotency">Idempotency</a>
+          <ul>
+            <li><a href="#creating-a-symbolic-link">Creating a symbolic link</a></li>
+            <li><a href="#removing-a-file">Removing a file</a></li>
+            <li><a href="#downloading-a-file">Downloading a file</a></li>
+          </ul>
+        </li>
+        <li><a href="#use-curly-brace-when-using-variable-inside-a-string">Use curly brace when using variable inside a string</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </nav>
+</aside>
 
 
 

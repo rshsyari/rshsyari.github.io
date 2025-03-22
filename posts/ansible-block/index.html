@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+            --font-size: 17.5px;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Ansible Block</title>
+    <meta name="description" content="Using Ansible in some case will require you to create logical groups of tasks. That can be done using ansible block, so let&rsquo;s talk about it.
+Basic usage …">
+    <meta name="keywords" content='blog, gokarna, hugo'>
+
+    <meta property="og:url" content="https://rshsyari.github.io:1313/posts/ansible-block/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ansible Block">
+    <meta property="og:description" content="Using Ansible in some case will require you to create logical groups of tasks. That can be done using ansible block, so let&rsquo;s talk about it.
+Basic usage …">
+    <meta property="og:image" content="https://rshsyari.github.io:1313/">
+    <meta property="og:image:secure_url" content="https://rshsyari.github.io:1313/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ansible Block">
+    <meta name="twitter:description" content="Using Ansible in some case will require you to create logical groups of tasks. That can be done using ansible block, so let&rsquo;s talk about it.
+Basic usage …">
+    <meta property="twitter:domain" content="https://rshsyari.github.io:1313/posts/ansible-block/">
+    <meta property="twitter:url" content="https://rshsyari.github.io:1313/posts/ansible-block/">
+    <meta name="twitter:image" content="https://rshsyari.github.io:1313/">
+
+    
+    <link rel="canonical" href="https://rshsyari.github.io:1313/posts/ansible-block/">
+
+    
+    <link rel="stylesheet" type="text/css" href="../../css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="../../css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="../../css/dark.min.css">
+
+    
+    <script src="../../js/bundle.min.60fe9a4dcb5a42836ec53c446e239a9862be5c1f67da457c275b9bf9681d796b.js" integrity="sha256-YP6aTctaQoNuxTxEbiOamGK&#43;XB9n2kV8J1ub&#43;WgdeWs="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://rshsyari.github.io:1313/">rshsyari</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://rshsyari.github.io:1313/" aria-label="" ><span data-feather='home'></span> Home </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://rshsyari.github.io:1313/posts/" aria-label="" ><span data-feather='book'></span> Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://rshsyari.github.io:1313/projects/" aria-label="" ><span data-feather='code'></span> Projects </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://rshsyari.github.io:1313/" ><span data-feather='home'></span> Home </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://rshsyari.github.io:1313/posts/" ><span data-feather='book'></span> Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://rshsyari.github.io:1313/projects/" ><span data-feather='code'></span> Projects </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Ansible Block</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">
+              
+
+              March 22, 2025
+
+              
+          </p>
+	
+
+        <ul class="post-tags">
+          
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>Using Ansible in some case will require you to create logical groups of tasks. That can be done using <code>ansible block</code>, so let&rsquo;s talk about it.</p>
+<h2 id="basic-usage">Basic usage</h2>
+<p>e.g. in the playbook below, we are configuring a AD Domain Services of a domain controller. The required information is taken from a JSON file, here is the example without <code>block</code>:</p>
+<h3 id="without-block">Without block</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure customers deployment</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">vars</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">data</span>: <span style="color:#e6db74">&#34;{{ lookup(&#39;file&#39;,&#39;/etc/ansible/customers.json&#39;) | from_json }}&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create AD OU</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">community.windows.win_domain_ou</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.name }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;dc=customers,dc=com&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;dc&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">dc</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create AD Group</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">community.windows.win_domain_group</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.name }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;ou={{ item.name }},dc=customers,dc=com&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;dc&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">dc</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create AD User</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">community.windows.win_domain_user</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.username }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">password</span>: <span style="color:#e6db74">&#34;{{ item.password }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;ou={{ item.name }},dc=customers,dc=com&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">update_password</span>: <span style="color:#ae81ff">on_create</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;dc&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">dc</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create document root</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">win_file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;C:/inetpub/wwwroot/{{ item.domain_prefix }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">directory</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;iis&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">iis</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create website content</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">win_copy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">dest</span>: <span style="color:#e6db74">&#34;C:/inetpub/wwwroot/{{ item.domain_prefix }}/index.html&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">content</span>: <span style="color:#e6db74">&#34;{{ item.message }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;iis&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">iis</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure virtualhost</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">win_iis_website</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">hostname</span>: <span style="color:#e6db74">&#34;{{ item.domain_prefix }}.customers.com&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.name }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">physical_path</span>: <span style="color:#e6db74">&#34;C:/inetpub/wwwroot/{{ item.domain_prefix }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;iis&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">iis</span>
+</span></span></code></pre></div><p>As you can probably see, the usage of <code>when</code> and <code>tag</code> in literally every tasks is redundant, when with <code>block</code> you only need it once. Unfortunately the case isn&rsquo;t the same for loops, <code>loop</code> cannot be used in <code>block</code> like you do with <code>when</code>, <code>delegate_to</code>, or <code>tags</code>. Now let me show you how it would look like with <code>block</code>:</p>
+<h3 id="with-block">With block</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure customers deployment</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">windows</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">vars</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">data</span>: <span style="color:#e6db74">&#34;{{ lookup(&#39;file&#39;,&#39;/etc/ansible/customers.json&#39;) | from_json }}&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create AD OU</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">community.windows.win_domain_ou</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.name }}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;dc=customers,dc=com&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create AD Group</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">community.windows.win_domain_group</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.name }}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;ou={{ item.name }},dc=customers,dc=com&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create AD User</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">community.windows.win_domain_user</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.username }}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">password</span>: <span style="color:#e6db74">&#34;{{ item.password }}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;ou={{ item.name }},dc=customers,dc=com&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">update_password</span>: <span style="color:#ae81ff">on_create</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;dc&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">dc</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create document root</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">win_file</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#e6db74">&#34;C:/inetpub/wwwroot/{{ item.domain_prefix }}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">state</span>: <span style="color:#ae81ff">directory</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Create website content</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">win_copy</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">dest</span>: <span style="color:#e6db74">&#34;C:/inetpub/wwwroot/{{ item.domain_prefix }}/index.html&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">content</span>: <span style="color:#e6db74">&#34;{{ item.message }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure virtualhost</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">win_iis_website</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">hostname</span>: <span style="color:#e6db74">&#34;{{ item.domain_prefix }}.customers.com&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;{{ item.name }}&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">physical_path</span>: <span style="color:#e6db74">&#34;C:/inetpub/wwwroot/{{ item.domain_prefix }}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ data }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#39;&#34;iis&#34; in group_names&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">iis</span>
+</span></span></code></pre></div><p>You can see it is much cleaner, and makes it more efficient because of lesser lines written. But besides code efficiency, it can be used for error handling too!
+Introducing: <code>rescue</code> and <code>always</code>.</p>
+<h2 id="error-handling">Error handling</h2>
+<h3 id="rescue-usage">Rescue usage</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span> <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>   - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Handle the error</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>       - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Print a message</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">debug</span>:
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">msg</span>: <span style="color:#e6db74">&#39;This execute normally&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Force a failure</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">command</span>: <span style="color:#ae81ff">/bin/false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Never print this</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">debug</span>:
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">msg</span>: <span style="color:#e6db74">&#39;This never execute&#39;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">rescue</span>:
+</span></span><span style="display:flex;"><span>       - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Print when errors</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">ansible.builtin.debug</span>:
+</span></span><span style="display:flex;"><span>           <span style="color:#f92672">msg</span>: <span style="color:#e6db74">&#39;This executes because a failure exists!&#39;</span>
+</span></span></code></pre></div><p>Ansible only runs <code>rescue</code> section after a task in <code>block</code> section returns a ‘failed’ state. Bad task definitions and unreachable hosts will not trigger the rescue block.</p>
+<p>Let&rsquo;s say we want to use rescue in addition to our earlier playbook, we want that everytime there&rsquo;s an error (e.g. failed to promote and becoming domain controller), it would display the error through the terminal we run the playbook from.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">rescue</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Display error</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;{{ ansible_failed_result }}&#34;</span>
+</span></span></code></pre></div><p>Lastly, there is <code>always</code> which will always run no matter the state of a previous task.</p>
+<h3 id="always-usage">Always usage</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Accumulate success</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ansible.builtin.set_fact</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">result</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;{{ inventory_hostname }}&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">status</span>: <span style="color:#e6db74">&#34;OK&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">interfaces</span>: <span style="color:#e6db74">&#34;{{ ansible_facts[&#39;interfaces&#39;] }}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">rescue</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Accumulate failure</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">ansible.builtin.set_fact</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">result</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">host</span>: <span style="color:#e6db74">&#34;{{ inventory_hostname }}&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">status</span>: <span style="color:#e6db74">&#34;FAIL&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">...</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">always</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Will always run after the main block</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">block</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Collect results</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">set_fact</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">global_result</span>: <span style="color:#e6db74">&#34;{{ (global_result | default([])) + [hostvars[item].result }}&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">loop</span>: <span style="color:#e6db74">&#34;{{ ansible_play_hosts }}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Classify results</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">set_fact</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">result_ok</span>: <span style="color:#e6db74">&#34;{{ _global_result | selectattr(&#39;status&#39;, &#39;equalto&#39;, &#39;OK&#39;) | list }}&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">result_fail</span>: <span style="color:#e6db74">&#34;{{ _global_result | selectattr(&#39;status&#39;, &#39;equalto&#39;, &#39;FAIL&#39;) | list }}&#34;</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Display results OK</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;{{ result_ok }}&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">when</span>: <span style="color:#ae81ff">(result_ok | length ) &gt; 0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Display results FAIL</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;{{ result_fail }}&#34;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">when</span>: <span style="color:#ae81ff">(result_fail | length ) &gt; 0</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">delegate_to</span>: <span style="color:#ae81ff">localhost</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">run_once</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">tag</span>: <span style="color:#ae81ff">results</span>
+</span></span></code></pre></div><p>Regardless of the tasks state; failed or successful, the <code>always</code> section will ALWAYS run.</p>
+<p>This <code>always</code> section collects the results saved in the variable <code>result</code> from the main block section. The classify results task sort it based on the status attributes it was given either by successully executed in the main <code>block</code> section or failed to execute in the <code>rescue</code> section.</p>
+<p>Additionally, you can see that inside the <code>always</code> section, we are using nested <code>block</code>. Yes, you can use nested <code>block</code>, even inside the main <code>block</code> section if you need to. But of course having a <code>block</code> section inside of a <code>block</code> section is not the best practice there is.</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+        <svg id="btt-button" class="arrow-logo" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top">
+    
+    <path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/>
+</svg>
+<script>
+    let backToTopButton = document.getElementById("btt-button");
+
+    window.onscroll = function() {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopButton.style.display = "block";
+        } else {
+            backToTopButton.style.display = "none";
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo(0, 0);
+    }
+</script>
+
+    
+    
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#basic-usage">Basic usage</a>
+          <ul>
+            <li><a href="#without-block">Without block</a></li>
+            <li><a href="#with-block">With block</a></li>
+          </ul>
+        </li>
+        <li><a href="#error-handling">Error handling</a>
+          <ul>
+            <li><a href="#rescue-usage">Rescue usage</a></li>
+            <li><a href="#always-usage">Always usage</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2025 rshsyari</span>
+    
+
+</footer>
+</body>
+</html>
