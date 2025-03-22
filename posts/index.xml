@@ -1,19 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on rshsyari</title>
-    <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on rshsyari</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 22 Mar 2025 21:13:52 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Bash</title>
-      <link>http://localhost:1313/posts/bash/</link>
-      <pubDate>Sat, 22 Mar 2025 21:13:52 +0700</pubDate>
-      <guid>http://localhost:1313/posts/bash/</guid>
-      <description>&lt;p&gt;For some small tasks, sometimes Bash script (shell script in general) is better than a full-blown program using programming languages. Here are some personal tips to write a Bash script:&lt;/p&gt;&#xA;&lt;h2 id=&#34;exit-on-fail&#34;&gt;Exit on fail&lt;/h2&gt;&#xA;&lt;p&gt;Use &lt;code&gt;set -o errexit&lt;/code&gt; to make the script exit when it fails. If some commands are allowed to fail, &lt;code&gt;command1 || echo &amp;quot;command1 is failed, but continuing&amp;quot;&lt;/code&gt; can be used.&lt;/p&gt;&#xA;&lt;h2 id=&#34;prevent-access-to-undeclared-variables&#34;&gt;Prevent access to undeclared variables&lt;/h2&gt;&#xA;&lt;p&gt;Use &lt;code&gt;set -o nounset&lt;/code&gt; to exit when the script tries to use undeclared variables. Imagine running this command when undeclared variables is allowed:&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on rshsyari</title><link>https://rshsyari.github.io/posts/</link><description>Recent content in Posts on rshsyari</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 22 Mar 2025 21:13:52 +0700</lastBuildDate><atom:link href="https://rshsyari.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Bash</title><link>https://rshsyari.github.io/bash/</link><pubDate>Sat, 22 Mar 2025 21:13:52 +0700</pubDate><guid>https://rshsyari.github.io/bash/</guid><description>&lt;p>For some small tasks, sometimes Bash script (shell script in general) is better than a full-blown program using programming languages. Here are some personal tips to write a Bash script:&lt;/p>
+&lt;h2 id="exit-on-fail">Exit on fail&lt;/h2>
+&lt;p>Use &lt;code>set -o errexit&lt;/code> to make the script exit when it fails. If some commands are allowed to fail, &lt;code>command1 || echo &amp;quot;command1 is failed, but continuing&amp;quot;&lt;/code> can be used.&lt;/p>
+&lt;h2 id="prevent-access-to-undeclared-variables">Prevent access to undeclared variables&lt;/h2>
+&lt;p>Use &lt;code>set -o nounset&lt;/code> to exit when the script tries to use undeclared variables. Imagine running this command when undeclared variables is allowed:&lt;/p></description></item></channel></rss>
