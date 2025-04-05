@@ -1,0 +1,114 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>LDAP Script</title>
+<meta name=description content="Managing LDAP can sometimes get complicated. Especially if it gets to the point where there are a huge amount of users. Using shell script can help reduce the …"><meta name=keywords content='blog,gokarna,hugo'><meta property="og:url" content="https://rshsyari.github.io/posts/ldap-sh/"><meta property="og:type" content="website"><meta property="og:title" content="LDAP Script"><meta property="og:description" content="Managing LDAP can sometimes get complicated. Especially if it gets to the point where there are a huge amount of users. Using shell script can help reduce the …"><meta property="og:image" content="https://rshsyari.github.io/images/penguin.jpg"><meta property="og:image:secure_url" content="https://rshsyari.github.io/images/penguin.jpg"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="LDAP Script"><meta name=twitter:description content="Managing LDAP can sometimes get complicated. Especially if it gets to the point where there are a huge amount of users. Using shell script can help reduce the …"><meta property="twitter:domain" content="https://rshsyari.github.io/posts/ldap-sh/"><meta property="twitter:url" content="https://rshsyari.github.io/posts/ldap-sh/"><meta name=twitter:image content="https://rshsyari.github.io/images/penguin.jpg"><link rel=canonical href=https://rshsyari.github.io/posts/ldap-sh/><link rel=stylesheet type=text/css href=https://rshsyari.github.io/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=https://rshsyari.github.io/css/main.min.css><link id=dark-theme rel=stylesheet href=https://rshsyari.github.io/css/dark.min.css><script src=../../js/bundle.min.60fe9a4dcb5a42836ec53c446e239a9862be5c1f67da457c275b9bf9681d796b.js></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://rshsyari.github.io/><img src=../../images/penguin.jpg alt=avatar></a></div><div class=nav-title><a class=nav-brand href=https://rshsyari.github.io/>rshsyari</a></div><div class=nav-links><div class=nav-link><a href=https://rshsyari.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://rshsyari.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://rshsyari.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://rshsyari.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://rshsyari.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://rshsyari.github.io/projects/><span data-feather=code></span> Projects</a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>LDAP Script</h1><small role=doc-subtitle></small><p class=post-date>March 31, 2025</p><ul class=post-tags></ul></div><div class=post-content><p>Managing LDAP can sometimes get complicated. Especially if it gets to the point where there are a huge amount of users. Using shell script can help reduce the stress and increase efficiency in managing those users.</p><p>For example, here we have 2 shell scripts, one for adding users, and the other for deleting users. Let&rsquo;s take a closer look:</p><h2 id=add-user>Add User</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Validate arguments</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -z $1 <span style=color:#f92672>]</span> <span style=color:#f92672>||</span> <span style=color:#f92672>[</span> -z $2 <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>	echo <span style=color:#e6db74>&#34;Please run it as: ./add_ldap_user.sh &lt;OU&gt; &lt;USER&gt;&#34;</span>
+</span></span><span style=display:flex><span>	exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Check if the user already exists</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ldapsearch -xb dc<span style=color:#f92672>=</span>example,dc<span style=color:#f92672>=</span>com <span style=color:#e6db74>&#34;uid=</span>$2<span style=color:#e6db74>&#34;</span> | grep -q <span style=color:#e6db74>&#34;uid: </span>$2<span style=color:#e6db74>&#34;</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>	echo <span style=color:#e6db74>&#34;User </span>$2<span style=color:#e6db74> already exist!&#34;</span>
+</span></span><span style=display:flex><span>	exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Validate the OU; it should exist, if not then create it</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ! ldapsearch -xb dc<span style=color:#f92672>=</span>example,dc<span style=color:#f92672>=</span>com <span style=color:#e6db74>&#34;ou=</span>$1<span style=color:#e6db74>&#34;</span> | grep -q <span style=color:#e6db74>&#34;ou: </span>$1<span style=color:#e6db74>&#34;</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    echo <span style=color:#e6db74>&#34;Organizational Unit &#39;</span>$1<span style=color:#e6db74>&#39; does not exist! Creating...&#34;</span>
+</span></span><span style=display:flex><span>    ldapadd -xD cn<span style=color:#f92672>=</span>admin,dc<span style=color:#f92672>=</span>example,dc<span style=color:#f92672>=</span>com -w P@ssw0rd <span style=color:#e6db74>&lt;&lt;EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    dn: ou=$1,dc=example,dc=com
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    objectClass: top
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    objectClass: organizationalUnit
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    ou: $1
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    description: $1 organizational unit
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Execute the user addition</span>
+</span></span><span style=display:flex><span>ldapadd -cxD cn<span style=color:#f92672>=</span>admin,dc<span style=color:#f92672>=</span>example,dc<span style=color:#f92672>=</span>com -w P@ssw0rd <span style=color:#e6db74>&lt;&lt;EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>dn: uid=$2,ou=$1,dc=example,dc=com
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>objectClass: top
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>objectClass: inetOrgPerson
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>objectClass: posixAccount
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>cn: $2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>sn $2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>uid: $2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>userPassword: $pass
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>uid: $((1100 + $RANDOM % 10000))
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>gid: $((1100 + $RANDOM % 10000))
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>homeDirectory: /home/$2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>gecos: $2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>description: $2 user account
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $? -eq <span style=color:#ae81ff>0</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    echo <span style=color:#e6db74>&#34;User &#39;</span>$2<span style=color:#e6db74>&#39; successfully added to OU &#39;</span>$1<span style=color:#e6db74>&#39;.&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    echo <span style=color:#e6db74>&#34;Failed to add user &#39;</span>$2<span style=color:#e6db74>&#39; to OU &#39;</span>$1<span style=color:#e6db74>&#39;.&#34;</span>
+</span></span><span style=display:flex><span>    exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span></code></pre></div><p>With scripts like this, you no longer have to write manual ldif file for each user, or spending a lot of times just to add some users. You can just write the bash script in the intended way, and poof! The user exists&mldr;</p><h2 id=delete-user>Delete User</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Validate arguments</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -z $1 <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>	echo <span style=color:#e6db74>&#34;Please run it as: ./delete_ldap_user.sh &lt;USER_TO_DELETE&gt;&#34;</span>
+</span></span><span style=display:flex><span>	exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Validate user; it should exists in order to be deleted</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ! ldapsearch -xb dc<span style=color:#f92672>=</span>example,dc<span style=color:#f92672>=</span>com <span style=color:#e6db74>&#34;uid=</span>$2<span style=color:#e6db74>&#34;</span> | grep -q <span style=color:#e6db74>&#34;uid: </span>$2<span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>	echo <span style=color:#e6db74>&#34;User </span>$1<span style=color:#e6db74> doesn&#39;t exist on LDAP database!&#34;</span>
+</span></span><span style=display:flex><span>	exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Executes the deletion</span>
+</span></span><span style=display:flex><span>ldapdelete -xD cn<span style=color:#f92672>=</span>admin,dc<span style=color:#f92672>=</span>example,dc<span style=color:#f92672>=</span>com -w P@ssw0rd <span style=color:#e6db74>&#34;uid=</span>$1<span style=color:#e6db74>,ou=*,dc=example,dc=com&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $? -eq <span style=color:#ae81ff>0</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    echo <span style=color:#e6db74>&#34;User </span>$1<span style=color:#e6db74> has been deleted!&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    echo <span style=color:#e6db74>&#34;Failed to delete user &#39;</span>$1<span style=color:#e6db74>&#39;.&#34;</span>
+</span></span><span style=display:flex><span>    exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span></code></pre></div><p>Or if you want to, you could specify the OU in the deletion script, so it would be run as: <code>bash delete_ldap_user.sh &lt;OU> &lt;USER></code> just like the addition script.</p><p>But let&rsquo;s say for example, you want to add LDAP users by converting it from a CSV File, well for this kinda task, I myself prefer to use Ansible! Let&rsquo;s see some example below&mldr;</p><h2 id=import-from-csv>Import from CSV</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Configure LDAP server</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>hosts</span>: <span style=color:#ae81ff>ldap</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>gather_facts</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>no_log</span>: <span style=color:#66d9ef>yes</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Read CSV File</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>read_csv</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/etc/ansible/users.csv</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>delimiter</span>: <span style=color:#e6db74>&#39;;&#39;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>register</span>: <span style=color:#ae81ff>users</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>delegate_to</span>: <span style=color:#ae81ff>localhost</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Make sure slapd is installed</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>apt</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>name</span>: <span style=color:#ae81ff>slapd,python3-ldap</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Import users to ldap</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>community.general.ldap_entry</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>state</span>: <span style=color:#ae81ff>present</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>server_uri</span>: <span style=color:#ae81ff>ldap://localhost/</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>bind_dn</span>: <span style=color:#ae81ff>cn=admin,dc=example,dc=com</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>bind_pw</span>: <span style=color:#ae81ff>P@ssw0rd</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>dn</span>: <span style=color:#ae81ff>uid=&#34;{{ item.username }}&#34;,dc=example,dc=com</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>objectClass</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>top</span>
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>inetOrgPerson</span>
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>posixAccount</span>
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>shadowAccount</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>attributes</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>uid</span>: <span style=color:#e6db74>&#34;{{item.username}}&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>cn</span>: <span style=color:#e6db74>&#34;{{ item.username }}&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>uidNumber</span>: <span style=color:#e6db74>&#34;{{ item.uid }}&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>gidNumber</span>: <span style=color:#e6db74>&#34;{{ item.uid }}&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>homeDirectory</span>: <span style=color:#e6db74>&#34;{{ item.home }}&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>loginShell</span>: <span style=color:#ae81ff>/bin/bash</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>userPassword</span>: <span style=color:#e6db74>&#34;{{ item.password }}&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>loop</span>: <span style=color:#e6db74>&#34;{{ users.list }}&#34;</span>
+</span></span></code></pre></div></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div></main><footer class=footer><span>&copy; 2025 rshsyari</span></footer></body></html>
