@@ -12,7 +12,7 @@ Basic usage …"><meta property="twitter:domain" content="https://rshsyari.githu
 </span></span><span style=display:flex><span>    <span style=color:#f92672>data</span>: <span style=color:#e6db74>&#34;{{ lookup(&#39;file&#39;,&#39;/etc/ansible/customers.json&#39;) | from_json }}&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
 </span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Create AD OU</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>community.windows.win_domain_ou</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>community.windows.win_domain_ou</span>:
 </span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;{{ item.name }}&#34;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;dc=customers,dc=com&#34;</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>loop</span>: <span style=color:#e6db74>&#34;{{ data }}&#34;</span>
@@ -20,7 +20,7 @@ Basic usage …"><meta property="twitter:domain" content="https://rshsyari.githu
 </span></span><span style=display:flex><span>      <span style=color:#f92672>tags</span>: <span style=color:#ae81ff>dc</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Create AD Group</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>community.windows.win_domain_group</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>community.windows.win_domain_group</span>:
 </span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;{{ item.name }}&#34;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;ou={{ item.name }},dc=customers,dc=com&#34;</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>loop</span>: <span style=color:#e6db74>&#34;{{ data }}&#34;</span>
@@ -28,7 +28,7 @@ Basic usage …"><meta property="twitter:domain" content="https://rshsyari.githu
 </span></span><span style=display:flex><span>      <span style=color:#f92672>tags</span>: <span style=color:#ae81ff>dc</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Create AD User</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>community.windows.win_domain_user</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>community.windows.win_domain_user</span>:
 </span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#e6db74>&#34;{{ item.username }}&#34;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>password</span>: <span style=color:#e6db74>&#34;{{ item.password }}&#34;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#e6db74>&#34;ou={{ item.name }},dc=customers,dc=com&#34;</span>
@@ -131,28 +131,24 @@ Introducing: <code>rescue</code> and <code>always</code>.</p><h2 id=error-handli
 </span></span><span style=display:flex><span>           <span style=color:#f92672>msg</span>: <span style=color:#e6db74>&#39;This executes because a failure exists!&#39;</span>
 </span></span></code></pre></div><p>Ansible only runs <code>rescue</code> section after a task in <code>block</code> section returns a ‘failed’ state. Bad task definitions and unreachable hosts will not trigger the rescue block.</p><p>Let&rsquo;s say we want to use rescue in addition to our earlier playbook, we want that everytime there&rsquo;s an error (e.g. failed to promote and becoming domain controller), it would display the error through the terminal we run the playbook from.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
 </span></span><span style=display:flex><span>    - <span style=color:#f92672>block</span>:
-</span></span><span style=display:flex><span>      <span style=color:#ae81ff>...</span>
+</span></span><span style=display:flex><span>          <span style=color:#75715e># Your code here</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>rescue</span>:
 </span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Display error</span>
 </span></span><span style=display:flex><span>          <span style=color:#f92672>debug</span>: <span style=color:#ae81ff>msg=&#34;{{ ansible_failed_result }}&#34;</span>
 </span></span></code></pre></div><p>Lastly, there is <code>always</code> which will always run no matter the state of a previous task.</p><h3 id=always-usage>Always usage</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
 </span></span><span style=display:flex><span>    - <span style=color:#f92672>block</span>:
-</span></span><span style=display:flex><span>      <span style=color:#ae81ff>...</span>
 </span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Accumulate success</span>
 </span></span><span style=display:flex><span>          <span style=color:#f92672>ansible.builtin.set_fact</span>:
 </span></span><span style=display:flex><span>            <span style=color:#f92672>result</span>:
 </span></span><span style=display:flex><span>              <span style=color:#f92672>host</span>: <span style=color:#e6db74>&#34;{{ inventory_hostname }}&#34;</span>
 </span></span><span style=display:flex><span>              <span style=color:#f92672>status</span>: <span style=color:#e6db74>&#34;OK&#34;</span>
 </span></span><span style=display:flex><span>              <span style=color:#f92672>interfaces</span>: <span style=color:#e6db74>&#34;{{ ansible_facts[&#39;interfaces&#39;] }}&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#ae81ff>...</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>rescue</span>:
-</span></span><span style=display:flex><span>      <span style=color:#ae81ff>...</span>
 </span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Accumulate failure</span>
 </span></span><span style=display:flex><span>          <span style=color:#f92672>ansible.builtin.set_fact</span>:
 </span></span><span style=display:flex><span>            <span style=color:#f92672>result</span>:
 </span></span><span style=display:flex><span>              <span style=color:#f92672>host</span>: <span style=color:#e6db74>&#34;{{ inventory_hostname }}&#34;</span>
 </span></span><span style=display:flex><span>              <span style=color:#f92672>status</span>: <span style=color:#e6db74>&#34;FAIL&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#ae81ff>...</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>always</span>:
 </span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Will always run after the main block</span>
 </span></span><span style=display:flex><span>          <span style=color:#f92672>block</span>:

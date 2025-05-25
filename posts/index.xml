@@ -1,63 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on rshsyari</title><link>https://rshsyari.github.io/posts/</link><description>Recent content in Posts on rshsyari</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 01 Apr 2025 02:07:35 +0700</lastBuildDate><atom:link href="https://rshsyari.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Bind9 Response Policy</title><link>https://rshsyari.github.io/posts/bind9-rpz/</link><pubDate>Tue, 01 Apr 2025 02:07:35 +0700</pubDate><guid>https://rshsyari.github.io/posts/bind9-rpz/</guid><description>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-zone" data-lang="zone">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">$TTL&lt;/span> &lt;span style="color:#e6db74">3600&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">@&lt;/span>	&lt;span style="color:#66d9ef">SOA&lt;/span>	localhost. admin.localhost. ( &lt;span style="color:#e6db74">3&lt;/span> &lt;span style="color:#e6db74">3600&lt;/span> &lt;span style="color:#e6db74">600&lt;/span> &lt;span style="color:#e6db74">3600&lt;/span> &lt;span style="color:#e6db74">600&lt;/span> )
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">@&lt;/span>	&lt;span style="color:#66d9ef">NS&lt;/span>	localhost.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">@&lt;/span>	&lt;span style="color:#66d9ef">A&lt;/span>	&lt;span style="color:#ae81ff">127.0.0.1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">*&lt;/span>	&lt;span style="color:#66d9ef">A&lt;/span>	&lt;span style="color:#ae81ff">127.0.0.1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code>response policy {
-	zone &amp;#34;nothere.com&amp;#34; policy CNAME www.example.com;
-};
-&lt;/code>&lt;/pre></description></item><item><title>LDAP Script</title><link>https://rshsyari.github.io/posts/ldap-sh/</link><pubDate>Mon, 31 Mar 2025 23:55:07 +0700</pubDate><guid>https://rshsyari.github.io/posts/ldap-sh/</guid><description>&lt;p>Managing LDAP can sometimes get complicated. Especially if it gets to the point where there are a huge amount of users. Using shell script can help reduce the stress and increase efficiency in managing those users.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on rshsyari</title><link>https://rshsyari.github.io/posts/</link><description>Recent content in Posts on rshsyari</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 31 Mar 2025 23:55:07 +0700</lastBuildDate><atom:link href="https://rshsyari.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>LDAP Script</title><link>https://rshsyari.github.io/posts/ldap-sh/</link><pubDate>Mon, 31 Mar 2025 23:55:07 +0700</pubDate><guid>https://rshsyari.github.io/posts/ldap-sh/</guid><description>&lt;p>Managing LDAP can sometimes get complicated. Especially if it gets to the point where there are a huge amount of users. Using shell script can help reduce the stress and increase efficiency in managing those users.&lt;/p>
 &lt;p>For example, here we have 2 shell scripts, one for adding users, and the other for deleting users. Let&amp;rsquo;s take a closer look:&lt;/p>
 &lt;h2 id="add-user">Add User&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env bash
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Validate arguments&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -z $1 &lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">||&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -z $2 &lt;span style="color:#f92672">]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	echo &lt;span style="color:#e6db74">&amp;#34;Please run it as: ./add_ldap_user.sh &amp;lt;OU&amp;gt; &amp;lt;USER&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	echo &lt;span style="color:#e6db74">&amp;#34;Please run it as: ./add_ldap_user.sh &amp;lt;OU|none&amp;gt; &amp;lt;USER&amp;gt;&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	exit &lt;span style="color:#ae81ff">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Check if the user already exists&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Validate user; if exists, abort&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> ldapsearch -xb dc&lt;span style="color:#f92672">=&lt;/span>example,dc&lt;span style="color:#f92672">=&lt;/span>com &lt;span style="color:#e6db74">&amp;#34;uid=&lt;/span>$2&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | grep -q &lt;span style="color:#e6db74">&amp;#34;uid: &lt;/span>$2&lt;span style="color:#e6db74">&amp;#34;&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	echo &lt;span style="color:#e6db74">&amp;#34;User &lt;/span>$2&lt;span style="color:#e6db74"> already exist!&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	exit &lt;span style="color:#ae81ff">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Validate the OU; it should exist, if not then create it&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> ! ldapsearch -xb dc&lt;span style="color:#f92672">=&lt;/span>example,dc&lt;span style="color:#f92672">=&lt;/span>com &lt;span style="color:#e6db74">&amp;#34;ou=&lt;/span>$1&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | grep -q &lt;span style="color:#e6db74">&amp;#34;ou: &lt;/span>$1&lt;span style="color:#e6db74">&amp;#34;&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Organizational Unit &amp;#39;&lt;/span>$1&lt;span style="color:#e6db74">&amp;#39; does not exist! Creating...&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ldapadd -xD cn&lt;span style="color:#f92672">=&lt;/span>admin,dc&lt;span style="color:#f92672">=&lt;/span>example,dc&lt;span style="color:#f92672">=&lt;/span>com -w P@ssw0rd &lt;span style="color:#e6db74">&amp;lt;&amp;lt;EOF
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> dn: ou=$1,dc=example,dc=com
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> objectClass: top
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> objectClass: organizationalUnit
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> ou: $1
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> description: $1 organizational unit
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Validate OU; if none, omit; if invalid, abort&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ou_check&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#66d9ef">$(&lt;/span>ldapsearch -xb dc&lt;span style="color:#f92672">=&lt;/span>example,dc&lt;span style="color:#f92672">=&lt;/span>com &lt;span style="color:#e6db74">&amp;#34;ou=&lt;/span>$1&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | grep -q &lt;span style="color:#e6db74">&amp;#34;ou: &lt;/span>$1&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span> $?&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Execute the user addition&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ldapadd -cxD cn&lt;span style="color:#f92672">=&lt;/span>admin,dc&lt;span style="color:#f92672">=&lt;/span>example,dc&lt;span style="color:#f92672">=&lt;/span>com -w P@ssw0rd &lt;span style="color:#e6db74">&amp;lt;&amp;lt;EOF
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">dn: uid=$2,ou=$1,dc=example,dc=com
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> $ou_check &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span> &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	DN&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;cn=&lt;/span>$2&lt;span style="color:#e6db74">,ou=&lt;/span>$1&lt;span style="color:#e6db74">,dc=example,dc=com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">elif&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> &lt;span style="color:#e6db74">${&lt;/span>1,,&lt;span style="color:#e6db74">}&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;none&amp;#34;&lt;/span> &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	DN&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;cn=&lt;/span>$2&lt;span style="color:#e6db74">,dc=example,dc=com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	echo &lt;span style="color:#e6db74">&amp;#34;Organizational Unit &lt;/span>$1&lt;span style="color:#e6db74"> is invalid, aborting...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Set encrypted password&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pass&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>slappasswd -s very_secure_password&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Execute user addition&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ldapadd -xD cn&lt;span style="color:#f92672">=&lt;/span>admin,dc&lt;span style="color:#f92672">=&lt;/span>example,dc&lt;span style="color:#f92672">=&lt;/span>com -w very_secure_password &lt;span style="color:#e6db74">&amp;lt;&amp;lt;EOF
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">dn: $DN
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">objectClass: top
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">objectClass: inetOrgPerson
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">objectClass: posixAccount
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">cn: $2
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">sn $2
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">sn: $2
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">uid: $2
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">userPassword: $pass
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">uid: $((1100 + $RANDOM % 10000))
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">gid: $((1100 + $RANDOM % 10000))
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">homeDirectory: /home/$2
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">gecos: $2
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">description: $2 user account
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">userPassword: $pass
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">uidNumber: $((1100 + $RANDOM % 10000))
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">gidNumber: $((1100 + $RANDOM % 10000))
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">homeDirectory: /home/$2
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">loginShell: /bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">description: $2 account
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">EOF&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> $? -eq &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;User &amp;#39;&lt;/span>$2&lt;span style="color:#e6db74">&amp;#39; successfully added to OU &amp;#39;&lt;/span>$1&lt;span style="color:#e6db74">&amp;#39;.&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Failed to add user &amp;#39;&lt;/span>$2&lt;span style="color:#e6db74">&amp;#39; to OU &amp;#39;&lt;/span>$1&lt;span style="color:#e6db74">&amp;#39;.&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>With scripts like this, you no longer have to write manual ldif file for each user, or spending a lot of times just to add some users. You can just write the bash script in the intended way, and poof! The user exists&amp;hellip;&lt;/p></description></item><item><title>Ansible Block</title><link>https://rshsyari.github.io/posts/ansible-block/</link><pubDate>Sat, 22 Mar 2025 23:58:38 +0700</pubDate><guid>https://rshsyari.github.io/posts/ansible-block/</guid><description>&lt;p>Using Ansible in some case will require you to create logical groups of tasks. That can be done using &lt;code>ansible block&lt;/code>, so let&amp;rsquo;s talk about it.&lt;/p>
 &lt;h2 id="basic-usage">Basic usage&lt;/h2>
 &lt;p>e.g. in the playbook below, we are configuring a AD Domain Services of a domain controller. The required information is taken from a JSON file, here is the example without &lt;code>block&lt;/code>:&lt;/p>
